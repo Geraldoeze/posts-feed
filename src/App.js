@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Route,
   //  Switch,
     // Redirect,
-    Router,
+    Routes,
     //  withRouter
      } from 'react-router-dom';
 
@@ -146,11 +146,11 @@ class App extends Component {
 
   render() {
     let routes = (
-      <Router>
+      <Routes>
         <Route
           path="/"
           exact
-          render={props => (
+          element={props => (
             <LoginPage
               {...props}
               onLogin={this.loginHandler}
@@ -161,7 +161,7 @@ class App extends Component {
         <Route
           path="/signup"
           exact
-          render={props => (
+          element={props => (
             <SignupPage
               {...props}
               onSignup={this.signupHandler}
@@ -170,21 +170,22 @@ class App extends Component {
           )}
         />
         {/* <Redirect to="/" /> */}
-      </Router>
+      </Routes>
     );
     if (this.state.isAuth) {
       routes = (
-        <Router>
+        <Routes>
           <Route
             path="/"
             exact
-            render={props => (
-              <FeedPage userId={this.state.userId} token={this.state.token} />
-            )}
+            element={<p>Bolu</p>}
+            // {props => (
+            //   <FeedPage userId={this.state.userId} token={this.state.token} />
+            // )}
           />
           <Route
             path="/:postId"
-            render={props => (
+            element={props => (
               <SinglePostPage
                 {...props}
                 userId={this.state.userId}
@@ -193,7 +194,7 @@ class App extends Component {
             )}
           />
           {/* <Redirect to="/" /> */}
-        </Router>
+        </Routes>
       );
     }
     return (
