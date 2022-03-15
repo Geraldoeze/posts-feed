@@ -50,7 +50,7 @@ class FeedPage extends Component {
       page--;
       this.setState({ postPage: page });
     }
-    fetch('URL')
+    fetch("http://localhost:4500/feed/posts")
       .then(res => {
         if (res.status !== 200) {
           throw new Error('Failed to fetch posts.');
@@ -63,6 +63,7 @@ class FeedPage extends Component {
           totalPosts: resData.totalItems,
           postsLoading: false
         });
+        console.log(resData) 
       })
       .catch(this.catchError);
   };

@@ -36,16 +36,17 @@ class SinglePost extends Component {
 
   render() {
     return (
-      <section className="single-post">
-        <h1>{this.state.title}</h1>
-        <h2>
-          Created by {this.state.author} on {this.state.date}
-        </h2>
-        <div className="single-post__image">
-          <Image contain imageUrl={this.state.image} />
-        </div>
-        <p>{this.state.content}</p>
-      </section>
+      <h1>Boys</h1>
+      // <section className="single-post">
+      //   <h1>{this.state.title}</h1>
+      //   <h2>
+      //     Created by {this.state.author} on {this.state.date}
+      //   </h2>
+      //   <div className="single-post__image">
+      //     <Image contain imageUrl={this.state.image} />
+      //   </div>
+      //   <p>{this.state.content}</p>
+      // </section>
     );
   }
 }
