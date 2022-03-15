@@ -1,8 +1,8 @@
 .modal {
   position: fixed;
-  width: 90%;
+  width: 80%;
   left: 5%;
-  top: 20vh;
+  top: 5vh;
   background: white;
   border-radius: 5px;
   z-index: 200;
@@ -16,15 +16,16 @@
 .modal__header h1 {
   font-size: 1.5rem;
   color: #3b0062;
-  margin: 1rem;
+  margin: 0.5rem;
 }
 
 .modal__content {
-  padding: 1rem;
+  padding: 0.5rem;
+  height: fit-content;
 }
 
 .modal__actions {
-  padding: 1rem;
+  padding: 0.5rem;
   text-align: right;
 }
 
