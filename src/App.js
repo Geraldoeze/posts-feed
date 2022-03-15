@@ -178,10 +178,11 @@ class App extends Component {
           <Route
             path="/"
             exact
-            element={<p>Bolu</p>}
-            // {props => (
-            //   <FeedPage userId={this.state.userId} token={this.state.token} />
-            // )}
+            element=
+            { <FeedPage 
+              userId={this.state.userId}
+               token={this.state.token} />
+            }
           />
           <Route
             path="/:postId"
