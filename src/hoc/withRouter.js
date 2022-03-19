@@ -1,4 +1,4 @@
-import {  useLocation, useNavigate, useOutlet} from "react-router";
+import {  useLocation, useNavigate, useOutlet } from "react-router";
 
 
 const withRouter = ( Child ) => {
@@ -9,7 +9,7 @@ const withRouter = ( Child ) => {
         return <Child { ...props }
          navigate = {navigate} 
           location={location} 
-          param={match}
+          match={match}
             />
     }
 }

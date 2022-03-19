@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import withRouter from '../../../hoc/withRouter'
 
 import Image from '../../../components/Image/Image';
 import './SinglePost.css';
@@ -13,7 +14,8 @@ class SinglePost extends Component {
   };
 
   componentDidMount() {
-    const postId = this.props.match.params.postId;
+    console.log(this.props.location.pathname)
+    const postId = this.props.location.pathname;
     fetch('http://localhost:4500/feed/post/' + postId)
       .then(res => {
         if (res.status !== 200) {
@@ -51,5 +53,5 @@ class SinglePost extends Component {
   }
 }
 
-export default SinglePost;
+export default withRouter(SinglePost);
  

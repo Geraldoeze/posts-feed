@@ -23,7 +23,7 @@ class App extends Component {
   state = {
     showBackdrop: false,
     showMobileNav: false,
-    isAuth: true,
+    isAuth: false,
     token: null,
     userId: null,
     authLoading: false,
@@ -102,11 +102,22 @@ class App extends Component {
         });
       });
   };
+  
 
   signupHandler = (event, authData) => {
     event.preventDefault();
     this.setState({ authLoading: true });
-    fetch('URL')
+    fetch('http://localhost:4500/auth/signup', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: authData.signupForm.email.value,
+        password: authData.signupForm.password.value,
+        name: authData.signupForm.name.value
+      })
+    })
       .then(res => {
         if (res.status === 422) {
           throw new Error(
@@ -145,29 +156,28 @@ class App extends Component {
   };
 
   render() {
+    // console.log(this.props)
     let routes = (
       <Routes>
         <Route
           path="/"
-          exact
-          element={props => (
+          exact='true'
+          element={
             <LoginPage
-              {...props}
               onLogin={this.loginHandler}
               loading={this.state.authLoading}
             />
-          )}
+          }
         />
         <Route
           path="/signup"
-          exact
-          element={props => (
+          exact='true'
+          element={
             <SignupPage
-              {...props}
               onSignup={this.signupHandler}
               loading={this.state.authLoading}
             />
-          )}
+          }
         />
         {/* <Redirect to="/" /> */}
       </Routes>
@@ -177,7 +187,7 @@ class App extends Component {
         <Routes>
           <Route
             path="/"
-            exact
+            exact='true'
             element=
             { <FeedPage 
               userId={this.state.userId}
@@ -188,11 +198,10 @@ class App extends Component {
             path="/:postId"
             element={
               <SinglePost
-                // {...props}
                 userId={this.state.userId}
                 token={this.state.token}
               />
-            }
+              }
           />
           {/* <Redirect to="/" /> */}
         </Routes>
