@@ -14,12 +14,12 @@ class SinglePost extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props.location.pathname)
+    console.log(this.props.location)
     const postId = this.props.location.pathname;
-    fetch('http://localhost:4500/feed/post/' + postId, {
-      headers: {
-        Authorization: 'Bearer ' + this.props.token
-      }
+    fetch('http://localhost:4500/feed/post' + postId, {
+      // headers: {
+      //   Authorization: 'Bearer ' + this.props.token
+      // }
     })
       .then(res => {
         if (res.status !== 200) {
@@ -31,10 +31,12 @@ class SinglePost extends Component {
         this.setState({
           title: resData.post.title,
           author: resData.post.creator.name,
-          image: 'http://localhost:4500/' + resData.post.imageUrl,
+          image: 'http://localhost:4500/images/todos.png',
+          // image: 'http://localhost:4500/' + resData.post.imageUrl,
           date: new Date(resData.post.createdAt).toLocaleDateString('en-US'),
           content: resData.post.content
         });
+        console.log(this.state.image)
       })
       .catch(err => {
         console.log(err);

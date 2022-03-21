@@ -105,7 +105,7 @@ class App extends Component {
       .catch(err => {
         console.log(err);
         this.setState({
-          isAuth: false,
+          isAuth: true,
           authLoading: false,
           error: err
         });
@@ -142,7 +142,7 @@ class App extends Component {
       .then(resData => {
         console.log(resData);
         this.setState({ isAuth: false, authLoading: false });
-        this.props.history.replace('/');
+        this.props.navigate('/');
       })
       .catch(err => {
         console.log(err);

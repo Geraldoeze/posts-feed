@@ -50,10 +50,10 @@ class FeedPage extends Component {
       page--;
       this.setState({ postPage: page });
     }
-    fetch("http://localhost:4500/feed/posts?page=" + page, {
-      headers: {
-        Authorization: 'Bearer ' + this.props.token
-      }
+    fetch("http://localhost:4500/feed/posts", {
+      // headers: {
+      //   Authorization: 'Bearer ' + this.props.token
+      // }
     })
       .then(res => {
         if (res.status !== 200) {
@@ -63,7 +63,12 @@ class FeedPage extends Component {
       })
       .then(resData => {
         this.setState({
-          posts: resData.posts,
+          posts: resData.posts.map(post => {
+            return {
+              ...post,
+              imagePath: post.imageUrl
+            }
+          }),
           totalPosts: resData.totalItems,
           postsLoading: false
         });
@@ -114,6 +119,7 @@ class FeedPage extends Component {
     formData.append('title', postData.title);
     formData.append('content', postData.content);
     formData.append('image', postData.image);
+    console.log(formData)
     let url = "http://localhost:4500/feed/post";
     let method = "POST";
     if (this.state.editPost) {
@@ -123,10 +129,8 @@ class FeedPage extends Component {
   
     fetch(url, {
       method: method,
-      body: formData,
-      headers: {
-        Authorization: 'Bearer ' + this.props.token
-      }
+      body: formData
+     
     })
       .then(res => {
         if (res.status !== 200 && res.status !== 201) {
