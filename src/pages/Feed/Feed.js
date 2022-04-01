@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import openSocket from 'socket.io-client';
 
 import Post from '../../components/Feed/Post/Post';
 import Button from '../../components/Button/Button';
@@ -9,7 +10,7 @@ import Loader from '../../components/Loader/Loader';
 import ErrorHandler from '../../components/ErrorHandler/ErrorHandler';
 import './Feed.css';
 
-class FeedPage extends Component {
+class Feed extends Component {
   state = {
     isEditing: false,
     posts: [],
@@ -22,7 +23,11 @@ class FeedPage extends Component {
   };
 
   componentDidMount() {
-    fetch('URL')
+    fetch('http://localhost:4500/auth/status', {
+      headers: {
+        Authorization: 'Bearer ' + this.props.token
+      }
+    })
       .then(res => {
         if (res.status !== 200) {
           throw new Error('Failed to fetch user status.');
@@ -30,11 +35,32 @@ class FeedPage extends Component {
         return res.json();
       })
       .then(resData => {
+        console.log(resData)
         this.setState({ status: resData.status });
       })
       .catch(this.catchError);
 
     this.loadPosts();
+    const socket = openSocket('http://localhost:4500');
+    socket.on('posts', data => {
+      if (data.action === 'create'){
+        this.addPost(data.post); 
+      }
+    })
+  }
+
+  addPost = post => {
+    this.setState(prevState => {
+      const updatedPosts = [...prevState.posts];
+      if (prevState.postPage === 1) {
+        updatedPosts.pop();
+        updatedPosts.unshift(post);
+      }
+      return {
+        posts: updatedPosts,
+        totalPosts: prevState.totalPosts + 1
+      }
+    })
   }
 
   loadPosts = direction => {
@@ -50,10 +76,10 @@ class FeedPage extends Component {
       page--;
       this.setState({ postPage: page });
     }
-    fetch("http://localhost:4500/feed/posts", {
-      // headers: {
-      //   Authorization: 'Bearer ' + this.props.token
-      // }
+    fetch('http://localhost:4500/feed/posts?page=' + page, {
+      headers: {
+        Authorization: 'Bearer ' + this.props.token
+      }
     })
       .then(res => {
         if (res.status !== 200) {
@@ -72,7 +98,6 @@ class FeedPage extends Component {
           totalPosts: resData.totalItems,
           postsLoading: false
         });
-        console.log(resData) 
       })
       .catch(this.catchError);
   };
@@ -118,19 +143,20 @@ class FeedPage extends Component {
     const formData = new FormData();
     formData.append('title', postData.title);
     formData.append('content', postData.content);
-    formData.append('image', postData.image);
-    console.log(formData)
-    let url = "http://localhost:4500/feed/post";
-    let method = "POST";
+    formData.append('image', postData.image)
+    let url = 'http://localhost:4500/feed/post';
+    let method = 'POST';
     if (this.state.editPost) {
       url = 'http://localhost:4500/feed/post/' + this.state.editPost._id;
       method = 'PUT';
     }
-  
-    fetch(url, {
+
+    fetch(url,{
       method: method,
-      body: formData
-     
+      body: formData,
+      headers: {
+        Authorization: 'Bearer ' + this.props.token
+      }
     })
       .then(res => {
         if (res.status !== 200 && res.status !== 201) {
@@ -282,4 +308,4 @@ class FeedPage extends Component {
   }
 }
 
-export default FeedPage;
+export default Feed;

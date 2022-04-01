@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import withRouter from '../../../hoc/withRouter'
 
 import Image from '../../../components/Image/Image';
 import './SinglePost.css';
@@ -14,12 +13,11 @@ class SinglePost extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props.location)
-    const postId = this.props.location.pathname;
-    fetch('http://localhost:4500/feed/post' + postId, {
-      // headers: {
-      //   Authorization: 'Bearer ' + this.props.token
-      // }
+    const postId = this.props.match.params.postId;
+    fetch('http://localhost:4500/feed/post/' + postId, {
+      headers: {
+        Authorization: 'Bearer ' + this.props.token
+      }
     })
       .then(res => {
         if (res.status !== 200) {
@@ -31,8 +29,7 @@ class SinglePost extends Component {
         this.setState({
           title: resData.post.title,
           author: resData.post.creator.name,
-          image: 'http://localhost:4500/images/todos.png',
-          // image: 'http://localhost:4500/' + resData.post.imageUrl,
+          image: 'http://localhost:4500/' + resData.post.imageUrl.toString().split('\\').join('/'),
           date: new Date(resData.post.createdAt).toLocaleDateString('en-US'),
           content: resData.post.content
         });
@@ -59,5 +56,4 @@ class SinglePost extends Component {
   }
 }
 
-export default withRouter(SinglePost);
- 
+export default SinglePost;
