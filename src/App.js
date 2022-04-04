@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
+import withRouter from './hoc/withRouter';
 
 import Layout from './components/Layout/Layout';
 import Backdrop from './components/Backdrop/Backdrop';
@@ -159,54 +160,50 @@ class App extends Component {
 
   render() {
     let routes = (
-      <Switch>
+      <Routes>
         <Route
           path="/"
           exact
-          render={props => (
+          element = {
             <LoginPage
-              {...props}
               onLogin={this.loginHandler}
               loading={this.state.authLoading}
-            />
-          )}
+            />}
         />
         <Route
           path="/signup"
           exact
-          render={props => (
+          element = {
             <SignupPage
-              {...props}
               onSignup={this.signupHandler}
               loading={this.state.authLoading}
             />
-          )}
+          }
         />
-        <Redirect to="/" />
-      </Switch>
+        {/* <Navigate to="/" /> */}
+      </Routes>
     );
     if (this.state.isAuth) {
       routes = (
-        <Switch>
+        <Routes>
           <Route
             path="/"
             exact
-            render={props => (
+            element = {
               <FeedPage userId={this.state.userId} token={this.state.token} />
-            )}
+            }
           />
           <Route
             path="/:postId"
-            render={props => (
+            element = {
               <SinglePostPage
-                {...props}
                 userId={this.state.userId}
                 token={this.state.token}
               />
-            )}
+            }
           />
-          <Redirect to="/" />
-        </Switch>
+          {/* <Navigate to="/" /> */}
+        </Routes>
       );
     }
     return (

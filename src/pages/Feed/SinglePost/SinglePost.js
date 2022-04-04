@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Image from '../../../components/Image/Image';
 import './SinglePost.css';
+import withRouter from '../../../hoc/withRouter';
 
 class SinglePost extends Component {
   state = {
@@ -13,8 +14,9 @@ class SinglePost extends Component {
   };
 
   componentDidMount() {
-    const postId = this.props.match.params.postId;
-    fetch('http://localhost:4500/feed/post/' + postId, {
+    console.log(this.props.location.pathname)
+    const postId = this.props.location.pathname;
+    fetch('http://localhost:4500/feed/post' + postId, {
       headers: {
         Authorization: 'Bearer ' + this.props.token
       }
@@ -56,4 +58,4 @@ class SinglePost extends Component {
   }
 }
 
-export default SinglePost;
+export default withRouter(SinglePost);
