@@ -39,7 +39,7 @@ class Feed extends Component {
         this.setState({ status: resData.status });
       })
       .catch(this.catchError);
-
+ 
     this.loadPosts();
     const socket = openSocket('http://localhost:4500');
     socket.on('posts', data => {
@@ -47,8 +47,10 @@ class Feed extends Component {
         this.addPost(data.post); 
       } else if (data.action === 'update') {
         this.updatePost(data.post)
+      } else if (data.action === 'delete') {
+        this.loadPosts();
       }
-    })
+    });
   }
 
   addPost = post => {
@@ -226,10 +228,11 @@ class Feed extends Component {
       })
       .then(resData => {
         console.log(resData);
-        this.setState(prevState => {
-          const updatedPosts = prevState.posts.filter(p => p._id !== postId);
-          return { posts: updatedPosts, postsLoading: false };
-        });
+        this.loadPosts();
+        // this.setState(prevState => {
+        //   const updatedPosts = prevState.posts.filter(p => p._id !== postId);
+        //   return { posts: updatedPosts, postsLoading: false };
+        // });
       })
       .catch(err => {
         console.log(err);
