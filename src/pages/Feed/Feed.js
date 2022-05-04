@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import openSocket from 'socket.io-client';
+import {io} from 'socket.io-client';
 
 import Post from '../../components/Feed/Post/Post';
 import Button from '../../components/Button/Button';
@@ -9,7 +9,7 @@ import Paginator from '../../components/Paginator/Paginator';
 import Loader from '../../components/Loader/Loader';
 import ErrorHandler from '../../components/ErrorHandler/ErrorHandler';
 import './Feed.css';
-
+ 
 class Feed extends Component {
   state = {
     isEditing: false,
@@ -41,7 +41,7 @@ class Feed extends Component {
       .catch(this.catchError);
  
     this.loadPosts();
-    const socket = openSocket('http://localhost:4500');
+    const socket = io(`http://localhost:4500`);
     socket.on('posts', data => {
       if (data.action === 'create'){
         this.addPost(data.post); 
@@ -50,7 +50,7 @@ class Feed extends Component {
       } else if (data.action === 'delete') {
         this.loadPosts();
       }
-    });
+    })
   }
 
   addPost = post => {
@@ -65,6 +65,7 @@ class Feed extends Component {
         totalPosts: prevState.totalPosts + 1
       }
     })
+    this.loadPosts();
   }
 
   updatePost = post => {
@@ -181,7 +182,6 @@ class Feed extends Component {
         return res.json();
       })
       .then(resData => {
-        console.log(resData)
         const post = {
           _id: resData.post._id,
           title: resData.post.title,
@@ -190,6 +190,7 @@ class Feed extends Component {
           createdAt: resData.post.createdAt
         };
         this.setState(prevState => { 
+          
           return {
             isEditing: false,
             editPost: null,
@@ -214,6 +215,7 @@ class Feed extends Component {
 
   deletePostHandler = postId => {
     this.setState({ postsLoading: true });
+    
     fetch('http://localhost:4500/feed/post/' + postId, {
       method: 'DELETE',
       headers: {
@@ -221,23 +223,29 @@ class Feed extends Component {
       }
     })
       .then(res => {
+        console.log(res)
         if (res.status !== 200 && res.status !== 201) {
-          throw new Error('Deleting a post failed!');
+          throw new Error('Deleting post failed!');
         }
         return res.json();
       })
       .then(resData => {
-        console.log(resData);
         this.loadPosts();
-        // this.setState(prevState => {
-        //   const updatedPosts = prevState.posts.filter(p => p._id !== postId);
-        //   return { posts: updatedPosts, postsLoading: false };
-        // });
+        this.setState(prevState => {
+          const updatedPosts = prevState.posts.filter(p => p._id !== postId);
+          return { posts: updatedPosts, postsLoading: false };
+        })
       })
       .catch(err => {
         console.log(err);
-        this.setState({ postsLoading: false });
+        this.setState({ 
+          postsLoading: false,
+          isEditing: false,
+          editPost: null,
+          editLoading: false,
+          error: err });
       });
+      
   };
 
   errorHandler = () => {
