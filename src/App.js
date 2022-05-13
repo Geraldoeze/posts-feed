@@ -60,7 +60,7 @@ class App extends Component {
   loginHandler = (event, authData) => {
     event.preventDefault();
     this.setState({ authLoading: true });
-    fetch('http://localhost:4500/auth/login', {
+    fetch('https://rest-projects.herokuapp.com/auth/login', {
       method: 'POST',  
       headers: {
         'Content-Type': 'application/json'
@@ -110,7 +110,7 @@ class App extends Component {
   signupHandler = (event, authData) => {
     event.preventDefault();
     this.setState({ authLoading: true });
-    fetch('http://localhost:4500/auth/signup', {
+    fetch('https://rest-projects.herokuapp.com/auth/signup', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -163,7 +163,6 @@ class App extends Component {
       <Routes>
         <Route
           path="/"
-          exact
           element = {
             <LoginPage
               onLogin={this.loginHandler}
@@ -172,7 +171,6 @@ class App extends Component {
         />
         <Route
           path="/signup"
-          exact
           element = {
             <SignupPage
               onSignup={this.signupHandler}
@@ -188,7 +186,6 @@ class App extends Component {
         <Routes>
           <Route
             path="/"
-            exact
             element = {
               <FeedPage userId={this.state.userId} token={this.state.token} />
             }
