@@ -23,7 +23,7 @@ class Feed extends Component {
   };
 
   componentDidMount() {
-    fetch('http://localhost:5500/auth/status', {
+    fetch('https://rest-projects.herokuapp.com/auth/status', {
       headers: {
         Authorization: 'Bearer ' + this.props.token
       }
@@ -93,7 +93,7 @@ class Feed extends Component {
       page--;
       this.setState({ postPage: page });
     }
-    fetch('http://localhost:5500/feed/posts?page=' + page, {
+    fetch('https://rest-projects.herokuapp.com/feed/posts?page=' + page, {
       headers: {
         Authorization: 'Bearer ' + this.props.token
       }
