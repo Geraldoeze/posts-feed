@@ -2,9 +2,10 @@
   padding: 0 1.5rem;
 }
 
+
 .navigation-item a {
   text-decoration: none;
-  color: white;
+  color: #00637c;
 }
 
 .navigation-item.mobile {
@@ -13,13 +14,14 @@
 }
 
 .navigation-item.mobile a {
-  color: #3b0062;
+  color: #007451;
+  padding: 0 1rem;
 }
 
 .navigation-item a:hover,
 .navigation-item a:active,
 .navigation-item a.active {
-  color: #fab83f;
+  color: #103625;
 }
 
 .navigation-item:last-of-type {
@@ -30,12 +32,12 @@
   font: inherit;
   background: transparent;
   border: none;
-  color: white;
+  color: #00637c;
   cursor: pointer;
-  padding: 0;
+  padding: 0 1rem;
 }
 
 .navigation-item button:hover,
 .navigation-item button:active {
-  color: #fab83f;
+  color: #012e1a;
 }

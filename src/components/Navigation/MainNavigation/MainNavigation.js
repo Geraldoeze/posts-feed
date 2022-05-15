@@ -11,7 +11,7 @@ const mainNavigation = props => (
   <nav className="main-nav">
     <MobileToggle onOpen={props.onOpenMobileNav} />
     <div className="main-nav__logo">
-      <NavLink to="/">
+      <NavLink to="/" className="active">
         <Logo />
       </NavLink>
     </div>

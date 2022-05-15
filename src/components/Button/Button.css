@@ -56,13 +56,13 @@
 }
 
 .button.button--accent {
-  border-color: #fab83f;
+  border-color: #858585;
   color: #fab83f;
 }
 
 .button--accent:hover,
 .button--accent:active {
-  background: #fab83f;
+  background: #796d57;
   color: #165e68;
 }
 
@@ -73,13 +73,13 @@
 }
 
 .button.button--accent.button--raised {
-  background: #fab83f;
-  color: #165e68;
+  background: #17beb1;
+  color: #fcd7d7;
 }
 
 .button--raised.button--accent:hover,
 .button--raised.button--accent:active {
-  background: #fbc766;
+  background: #02634a;
 }
 
 .button.button--danger {
