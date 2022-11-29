@@ -60,7 +60,7 @@ class App extends Component {
   loginHandler = (event, authData) => {
     event.preventDefault();
     this.setState({ authLoading: true });
-    fetch('https://rest-projects.herokuapp.com/auth/login', {
+    fetch('https://rest-api-indol-nine.vercel.app/auth/login', {
       method: 'POST',  
       headers: {
         'Content-Type': 'application/json'
@@ -110,7 +110,7 @@ class App extends Component {
   signupHandler = (event, authData) => {
     event.preventDefault();
     this.setState({ authLoading: true });
-    fetch('https://rest-projects.herokuapp.com/auth/signup', {
+    fetch('https://rest-api-indol-nine.vercel.app/auth/signup', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'

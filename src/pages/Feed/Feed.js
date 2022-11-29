@@ -23,7 +23,7 @@ class Feed extends Component {
   };
 
   componentDidMount() {
-    fetch('https://rest-projects.herokuapp.com/auth/status', {
+    fetch('https://rest-api-indol-nine.vercel.app/auth/status', {
       headers: {
         Authorization: 'Bearer ' + this.props.token
       }
@@ -41,7 +41,7 @@ class Feed extends Component {
       .catch(this.catchError);
  
     this.loadPosts();
-    const socket = io(`https://rest-projects.herokuapp.com`);
+    const socket = io(`https://rest-api-indol-nine.vercel.app/`);
     socket.on('posts', data => {
       if (data.action === 'create'){
         this.addPost(data.post); 
@@ -93,7 +93,7 @@ class Feed extends Component {
       page--;
       this.setState({ postPage: page });
     }
-    fetch('https://rest-projects.herokuapp.com/feed/posts?page=' + page, {
+    fetch('https://rest-api-indol-nine.vercel.app/feed/posts?page=' + page, {
       headers: {
         Authorization: 'Bearer ' + this.props.token
       }
@@ -161,10 +161,10 @@ class Feed extends Component {
     formData.append('title', postData.title);
     formData.append('content', postData.content);
     formData.append('image', postData.image)
-    let url = 'https://rest-projects.herokuapp.com/feed/post';
+    let url = 'https://rest-api-indol-nine.vercel.app/feed/post';
     let method = 'POST';
     if (this.state.editPost) {
-      url = 'https://rest-projects.herokuapp.com/feed/post/' + this.state.editPost._id;
+      url = 'https://rest-api-indol-nine.vercel.app/feed/post/' + this.state.editPost._id;
       method = 'PUT';
     }
 
@@ -216,7 +216,7 @@ class Feed extends Component {
   deletePostHandler = postId => {
     this.setState({ postsLoading: true });
     
-    fetch('https://rest-projects.herokuapp.com/feed/post/' + postId, {
+    fetch('https://rest-api-indol-nine.vercel.app/feed/post/' + postId, {
       method: 'DELETE',
       headers: {
         Authorization: 'Bearer ' + this.props.token

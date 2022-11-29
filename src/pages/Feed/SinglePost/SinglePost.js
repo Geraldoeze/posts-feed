@@ -16,7 +16,7 @@ class SinglePost extends Component {
   componentDidMount() {
     console.log(this.props.location.pathname)
     const postId = this.props.location.pathname;
-    fetch('https://rest-projects.herokuapp.com/feed/post' + postId, {
+    fetch('https://rest-api-indol-nine.vercel.app/feed/post' + postId, {
       headers: {
         Authorization: 'Bearer ' + this.props.token
       }
@@ -31,7 +31,7 @@ class SinglePost extends Component {
         this.setState({
           title: resData.post.title,
           author: resData.post.creator.name,
-          image: 'https://rest-projects.herokuapp.com/' + resData.post.imageUrl.toString().split('\\').join('/'),
+          image: 'https://rest-api-indol-nine.vercel.app/' + resData.post.imageUrl.toString().split('\\').join('/'),
           date: new Date(resData.post.createdAt).toLocaleDateString('en-US'),
           content: resData.post.content
         });
