@@ -14,6 +14,7 @@ import LoginPage from './pages/Auth/Login';
 import SignupPage from './pages/Auth/Signup';
 import './App.css';
 
+
 class App extends Component {
   state = {
     showBackdrop: false,
@@ -25,6 +26,7 @@ class App extends Component {
     error: null
   };
 
+  
   componentDidMount() {
     const token = localStorage.getItem('token');
     const expiryDate = localStorage.getItem('expiryDate');
@@ -136,7 +138,8 @@ class App extends Component {
       .then(resData => {
         console.log(resData);
         this.setState({ isAuth: false, authLoading: false });
-        this.props.history.replace('/');
+        this.props.navigate('/');
+        
       })
       .catch(err => {
         console.log(err);

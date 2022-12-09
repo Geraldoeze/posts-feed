@@ -12,6 +12,7 @@ class SinglePost extends Component {
     image: '',
     content: ''
   };
+  
 
   componentDidMount() {
     console.log(this.props.location.pathname)

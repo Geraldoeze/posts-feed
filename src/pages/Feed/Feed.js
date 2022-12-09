@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import {io} from 'socket.io-client';
+
+import { io } from "socket.io-client";
 
 import Post from '../../components/Feed/Post/Post';
 import Button from '../../components/Button/Button';
@@ -35,14 +36,20 @@ class Feed extends Component {
         return res.json();
       })
       .then(resData => {
-        console.log(resData)
         this.setState({ status: resData.status });
       })
       .catch(this.catchError);
  
     this.loadPosts();
-    const socket = io(`https://rest-api-indol-nine.vercel.app/`);
+    
+     const socket = io('https://rest-api-indol-nine.vercel.app', {
+      withCredentials: true,
+      extraHeaders: {
+        "SocketConnect": "plug"
+      }
+    });
     socket.on('posts', data => {
+      console.log(data)
       if (data.action === 'create'){
         this.addPost(data.post); 
       } else if (data.action === 'update') {
@@ -97,6 +104,7 @@ class Feed extends Component {
       headers: {
         Authorization: 'Bearer ' + this.props.token
       }
+      // use content-type only when sending data
     })
       .then(res => {
         if (res.status !== 200) {
@@ -118,6 +126,7 @@ class Feed extends Component {
       })
       .catch(this.catchError);
   };
+
   statusUpdateHandler = event => {
     event.preventDefault();
   
@@ -166,14 +175,16 @@ class Feed extends Component {
     this.setState({
       editLoading: true
     });
+  
     const formData = new FormData();
     formData.append('title', postData.title);
     formData.append('content', postData.content);
     formData.append('image', postData.image)
     let url = 'https://rest-api-indol-nine.vercel.app/feed/post';
+    
     let method = 'POST';
     if (this.state.editPost) {
-      url = 'https://rest-api-indol-nine.vercel.app/feed/post/' + this.state.editPost._id;
+      url = 'http://localhost:5500/feed/post/' + this.state.editPost._id;
       method = 'PUT';
     }
 
@@ -199,7 +210,7 @@ class Feed extends Component {
           createdAt: resData.post.createdAt
         };
         this.setState(prevState => { 
-          
+          // this.addPost(post)
           return {
             isEditing: false,
             editPost: null,
@@ -312,6 +323,7 @@ class Feed extends Component {
               currentPage={this.state.postPage}
             >
               {this.state.posts.map(post => (
+                
                 <Post
                   key={post._id}
                   id={post._id}
