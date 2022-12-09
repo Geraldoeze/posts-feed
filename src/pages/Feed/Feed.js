@@ -24,7 +24,7 @@ class Feed extends Component {
 
   componentDidMount() {
     fetch('https://rest-api-indol-nine.vercel.app/auth/status', {
-      headers: {
+    headers: {
         Authorization: 'Bearer ' + this.props.token
       }
     })
@@ -118,10 +118,19 @@ class Feed extends Component {
       })
       .catch(this.catchError);
   };
-
   statusUpdateHandler = event => {
     event.preventDefault();
-    fetch('URL')
+  
+    fetch('https://rest-api-indol-nine.vercel.app/auth/status',{
+      method: 'PATCH',
+      body: JSON.stringify({
+        status: this.state.status
+      }),
+      headers: {
+        'Content-Type':'application/json',
+        Authorization: 'Bearer ' + this.props.token
+      }
+    })
       .then(res => {
         if (res.status !== 200 && res.status !== 201) {
           throw new Error("Can't update status!");
