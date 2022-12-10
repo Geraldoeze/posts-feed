@@ -42,22 +42,22 @@ class Feed extends Component {
  
     this.loadPosts();
     
-     const socket = io('https://rest-api-indol-nine.vercel.app', {
+     io('https://rest-api-indol-nine.vercel.app', {
       withCredentials: true,
       extraHeaders: {
         "SocketConnect": "plug"
       }
     });
-    socket.on('posts', data => {
-      console.log(data)
-      if (data.action === 'create'){
-        this.addPost(data.post); 
-      } else if (data.action === 'update') {
-        this.updatePost(data.post)
-      } else if (data.action === 'delete') {
-        this.loadPosts();
-      }
-    })
+    // socket.on('posts', data => {
+    //   console.log(data)
+    //   if (data.action === 'create'){
+    //     this.addPost(data.post); 
+    //   } else if (data.action === 'update') {
+    //     this.updatePost(data.post)
+    //   } else if (data.action === 'delete') {
+    //     this.loadPosts();
+    //   }
+    // })
   }
 
   addPost = post => {
@@ -210,7 +210,7 @@ class Feed extends Component {
           createdAt: resData.post.createdAt
         };
         this.setState(prevState => { 
-          // this.addPost(post)
+          this.addPost(post)
           return {
             isEditing: false,
             editPost: null,
