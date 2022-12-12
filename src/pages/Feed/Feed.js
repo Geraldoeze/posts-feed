@@ -42,8 +42,8 @@ class Feed extends Component {
  
     this.loadPosts();
     
-    //  const socket = OpenSocket('https://rest-api-indol-nine.vercel.app', {
-      OpenSocket('http://localhost:5500', {
+     OpenSocket('https://rest-api-indol-nine.vercel.app', {
+      // OpenSocket('http://localhost:5500', {
       withCredentials: true,
       extraHeaders: {
         "SocketConnect": "plug"
@@ -185,7 +185,7 @@ class Feed extends Component {
     
     let method = 'POST';
     if (this.state.editPost) {
-      url = 'http://localhost:5500/feed/post/' + this.state.editPost._id;
+      url = 'https://rest-api-indol-nine.vercel.app/feed/post/' + this.state.editPost._id;
       method = 'PUT';
     }
 
