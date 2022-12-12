@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
-import { io } from "socket.io-client";
+import OpenSocket from "socket.io-client";
 
 import Post from '../../components/Feed/Post/Post';
 import Button from '../../components/Button/Button';
@@ -42,22 +42,23 @@ class Feed extends Component {
  
     this.loadPosts();
     
-     io('https://rest-api-indol-nine.vercel.app', {
+    //  const socket = OpenSocket('https://rest-api-indol-nine.vercel.app', {
+      const socket = OpenSocket('http://localhost:5500', {
       withCredentials: true,
       extraHeaders: {
         "SocketConnect": "plug"
       }
     });
-    // socket.on('posts', data => {
-    //   console.log(data)
-    //   if (data.action === 'create'){
-    //     this.addPost(data.post); 
-    //   } else if (data.action === 'update') {
-    //     this.updatePost(data.post)
-    //   } else if (data.action === 'delete') {
-    //     this.loadPosts();
-    //   }
-    // })
+    socket.on('posts', data => {
+      console.log(data)
+      if (data.action === 'create'){
+        this.addPost(data.post); 
+      } else if (data.action === 'update') {
+        this.updatePost(data.post)
+      } else if (data.action === 'delete') {
+        this.loadPosts();
+      }
+    })
   }
 
   addPost = post => {
