@@ -46,14 +46,14 @@ class Feed extends Component {
       // OpenSocket('http://localhost:5500', {
       withCredentials: true,
       extraHeaders: {
-        "SocketConnect": "plug"
+        "Socket-Connect": "abcd"
       },
       transports: ['polling']
     });
     socket.on('connect', function () {
       console.log('connected!');
-      socket.emit('greet', { message: 'Hello Mr.Server!' });
     });
+    socket.emit('greet', { message: 'Hello Mr.Server!' });
     socket.on('posts', data => {
       console.log()
       if (data.action === 'create'){
