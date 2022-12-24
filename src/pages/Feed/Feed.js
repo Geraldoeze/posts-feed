@@ -53,17 +53,17 @@ class Feed extends Component {
     socket.on('connect', function () {
       console.log('connected!');
     });
-    socket.emit('greet', { message: 'Hello Mr.Server!' });
-    socket.on('posts', data => {
-      console.log()
-      if (data.action === 'create'){
-        this.addPost(data.post); 
-      } else if (data.action === 'update') {
-        this.updatePost(data.post)
-      } else if (data.action === 'delete') {
-        this.loadPosts();
-      }
-    })
+    // socket.emit('greet', { message: 'Hello Mr.Server!' });
+    // socket.on('posts', data => {
+    //   console.log()
+    //   if (data.action === 'create'){
+    //     this.addPost(data.post); 
+    //   } else if (data.action === 'update') {
+    //     this.updatePost(data.post)
+    //   } else if (data.action === 'delete') {
+    //     this.loadPosts();
+    //   }
+    // })
   }
 
   addPost = post => {
