@@ -48,7 +48,7 @@ class Feed extends Component {
       extraHeaders: {
         "SocketConnect": "plug"
       },
-      transports: ['websocket']
+      transports: ['polling']
     });
     socket.on('connect', function () {
       console.log('connected!');
