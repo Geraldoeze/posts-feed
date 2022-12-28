@@ -47,8 +47,7 @@ class Feed extends Component {
       withCredentials: true,
       extraHeaders: {
         "Socket-Connect": "abcd"
-      },
-      transports: ['polling']
+      }
     });
     socket.on('connect', function () {
       console.log('connected!');
